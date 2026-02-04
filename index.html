@@ -2,117 +2,110 @@
 <html lang="si">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>78th Independence Day Sri Lanka</title>
   <style>
-    /* මූලික සැකසුම් */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    body { margin: 0; width: 100vw; height: 100vh; overflow: hidden; background: #000; font-family: sans-serif; touch-action: none; }
+    
+    .content-wrapper {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 100; pointer-events: none; padding: 20px; box-sizing: border-box;
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start; /* ඉහළ සිට ආරම්භ කිරීමට */
-      align-items: center;
-      min-height: 100vh;
-      background: #000;
-      overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-      perspective: 1000px;
-      padding-top: 5vh; /* ඉහළින් කුඩා ඉඩක් */
-    }
-
-    /* රූපය සඳහා සැකසුම් */
     .banner-img {
-      width: 85%;
-      max-width: 450px; 
-      border-radius: 12px;
-      box-shadow: 0 0 30px rgba(255, 190, 41, 0.4);
-      z-index: 10;
-      animation: fadeInDown 1.5s ease-out;
-      border: 1px solid rgba(255, 190, 41, 0.3);
+      width: 85%; max-width: 360px; height: auto; border-radius: 15px;
+      box-shadow: 0 0 30px rgba(255, 190, 41, 0.4); z-index: 105;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .wish-text { margin-top: 20px; text-align: center; }
+    .wish-text h1 {
+      font-size: clamp(1.5rem, 7vw, 2.2rem); margin: 0; font-weight: 800;
+      background: linear-gradient(to right, #ffbe29, #ffffff, #00534e, #800000);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size: 200%; animation: grad 4s linear infinite;
+    }
+.wish-text p {
+      color: #fff;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 5px;
+}
+    @keyframes grad { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+    .ripple {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotateX(75deg);
+      border-radius: 50%; border: 1.5px solid #FFD700; width: 60px; height: 60px; opacity: 0;
+      animation: rippleEffect 4s linear calc(var(--i) * 0.4s) infinite;
     }
 
-    /* Animation එක තබන ස්ථානය */
-    .container {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 40vh; /* රූපයට යටින් ප්‍රමාණවත් ඉඩක් */
-      width: 100%;
-      transform-style: preserve-3d;
-      margin-top: 50px; /* රූපය සහ රවුම් අතර පරතරය */
+    @keyframes rippleEffect {
+      0% { width: 60px; height: 60px; opacity: 1; border-color: #FFD700; }
+      100% { width: 500px; height: 500px; opacity: 0; border-color: #0077FF; }
     }
 
-    .circle {
-      position: absolute;
-      background: transparent;
-      width: calc(15vmin + (var(--i) * 2vmin)); /* ප්‍රමාණය තරමක් වෙනස් කළා */
-      aspect-ratio: 1;
-      border-radius: 50%;
-      border: 2px solid #FFBE29;
-      transform-style: preserve-3d;
-      /* 3D භ්‍රමණය සහ චලනය */
-      animation: animate 4s ease-in-out calc(var(--i) * 0.1s) infinite;
-      box-shadow: 0 0 10px rgba(255, 190, 41, 0.2);
-    }
-
-    @keyframes animate {
-      0%, 100% {
-        transform: rotateX(75deg) translateZ(0) translateY(0);
-        border-color: #FFBE29;
-        opacity: 0.5;
-      }
-      50% {
-        /* ඉහළට යන ප්‍රමාණය පාලනය කළා */
-        transform: rotateX(75deg) translateZ(0) translateY(-20vh);
-        border-color: #00534E;
-        opacity: 1;
-      }
-    }
-
-    /* ජංගම දුරකථන සඳහා කුඩා වෙනස්කම් */
-    @media (max-height: 700px) {
-      .banner-img { max-width: 320px; }
-      .container { margin-top: 20px; }
-    }
+    canvas { position: fixed; top: 0; left: 0; z-index: 1; }
   </style>
 </head>
 <body>
 
-  <img src="78new.jpg" alt="78th Independence Day" class="banner-img">
-
-  <div class="container">
-    <div class="circle" style="--i:1;"></div>
-    <div class="circle" style="--i:2;"></div>
-    <div class="circle" style="--i:3;"></div>
-    <div class="circle" style="--i:4;"></div>
-    <div class="circle" style="--i:5;"></div>
-    <div class="circle" style="--i:6;"></div>
-    <div class="circle" style="--i:7;"></div>
-    <div class="circle" style="--i:8;"></div>
-    <div class="circle" style="--i:9;"></div>
-    <div class="circle" style="--i:10;"></div>
-    <div class="circle" style="--i:11;"></div>
-    <div class="circle" style="--i:12;"></div>
-    <div class="circle" style="--i:13;"></div>
-    <div class="circle" style="--i:14;"></div>
-    <div class="circle" style="--i:15;"></div>
-    <div class="circle" style="--i:16;"></div>
-    <div class="circle" style="--i:17;"></div>
-    <div class="circle" style="--i:18;"></div>
-    <div class="circle" style="--i:19;"></div>
-    <div class="circle" style="--i:20;"></div>
+  <div class="content-wrapper">
+    <div style="position: absolute; top: 45%; left: 50%;">
+      <div class="ripple" style="--i:1;"></div>
+      <div class="ripple" style="--i:2;"></div>
+      <div class="ripple" style="--i:3;"></div>
+      <div class="ripple" style="--i:4;"></div>
+    </div>
+    <img src="78new.jpg" alt="Independence Day" class="banner-img">
+    <div class="wish-text">
+      <h1>නිදහස් දින සුබ පැතුම්</h1>
+ <  p>Pride of Sri Lanka</p>
+    </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    let scene, camera, renderer, rain, rainGeo, rainCount = 3000; // Optimized count
+
+    function init() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 1000);
+      camera.position.z = 1;
+      camera.rotation.x = 1.16;
+
+      renderer = new THREE.WebGLRenderer({ antialias: false });
+      renderer.setPixelRatio(window.devicePixelRatio > 1 ? 1 : 1); // Performance boost
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Rain (Lightweight)
+      rainGeo = new THREE.BufferGeometry();
+      let pos = new Float32Array(rainCount * 3);
+      for(let i=0; i<rainCount; i++) {
+        pos[i*3] = Math.random()*400-200;
+        pos[i*3+1] = Math.random()*500-250;
+        pos[i*3+2] = Math.random()*400-200;
+      }
+      rainGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      rain = new THREE.Points(rainGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true }));
+      scene.add(rain);
+
+      animate();
+    }
+
+    function animate() {
+      let p = rainGeo.attributes.position.array;
+      for(let i=0; i<rainCount; i++) {
+        p[i*3+1] -= 4;
+        if (p[i*3+1] < -200) p[i*3+1] = 200;
+      }
+      rainGeo.attributes.position.needsUpdate = true;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    init();
+  </script>
 </body>
 </html>
