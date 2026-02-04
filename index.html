@@ -19,20 +19,28 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .wish-text { margin-top: 20px; text-align: center; }
+    .wish-text { 
+      margin-top: 20px; 
+      text-align: center; 
+      z-index: 110; /* පේන්න තියෙන්න ඕන නිසා */
+    }
+    
     .wish-text h1 {
       font-size: clamp(1.5rem, 7vw, 2.2rem); margin: 0; font-weight: 800;
       background: linear-gradient(to right, #ffbe29, #ffffff, #00534e, #800000);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-size: 200%; animation: grad 4s linear infinite;
     }
-.wish-text p {
+
+    .wish-text p {
       color: #fff;
       letter-spacing: 3px;
       font-size: 0.8rem;
-      opacity: 0.6;
-      margin-top: 5px;
-}
+      opacity: 0.7; /* මදක් වැඩි කළා පැහැදිලිව පේන්න */
+      margin-top: 8px;
+      display: block; /* අනිවාර්යයෙන් පෙන්වීමට */
+    }
+
     @keyframes grad { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
     .ripple {
@@ -58,16 +66,18 @@
       <div class="ripple" style="--i:3;"></div>
       <div class="ripple" style="--i:4;"></div>
     </div>
+
     <img src="78new.jpg" alt="Independence Day" class="banner-img">
+
     <div class="wish-text">
       <h1>නිදහස් දින සුබ පැතුම්</h1>
- <  p>Pride of Sri Lanka</p>
+      <p>Pride of Sri Lanka</p>
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    let scene, camera, renderer, rain, rainGeo, rainCount = 3000; // Optimized count
+    let scene, camera, renderer, rain, rainGeo, rainCount = 2000; // Dot ප්‍රමාණය අඩු කළා
 
     function init() {
       scene = new THREE.Scene();
@@ -76,11 +86,11 @@
       camera.rotation.x = 1.16;
 
       renderer = new THREE.WebGLRenderer({ antialias: false });
-      renderer.setPixelRatio(window.devicePixelRatio > 1 ? 1 : 1); // Performance boost
+      renderer.setPixelRatio(1); 
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
-      // Rain (Lightweight)
+      // ලාවට වැහෙන වැස්ස (Low Opacity & Smaller Dots)
       rainGeo = new THREE.BufferGeometry();
       let pos = new Float32Array(rainCount * 3);
       for(let i=0; i<rainCount; i++) {
@@ -89,7 +99,16 @@
         pos[i*3+2] = Math.random()*400-200;
       }
       rainGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      rain = new THREE.Points(rainGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true }));
+      
+      // opacity: 0.3 කියන්නේ ලාවට පේන වැස්ස
+      let rainMaterial = new THREE.PointsMaterial({ 
+        color: 0xaaaaaa, 
+        size: 0.08, 
+        transparent: true, 
+        opacity: 0.3 
+      });
+      
+      rain = new THREE.Points(rainGeo, rainMaterial);
       scene.add(rain);
 
       animate();
@@ -98,13 +117,21 @@
     function animate() {
       let p = rainGeo.attributes.position.array;
       for(let i=0; i<rainCount; i++) {
-        p[i*3+1] -= 4;
+        p[i*3+1] -= 2.5; // වැස්සේ වේගය අඩු කළා (Slow motion)
         if (p[i*3+1] < -200) p[i*3+1] = 200;
       }
       rainGeo.attributes.position.needsUpdate = true;
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     }
+    
+    // Window Resize Fix
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
     init();
   </script>
 </body>
