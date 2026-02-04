@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>78th Independence Day Sri Lanka</title>
   <style>
-    /* Reset and Base Styles */
+    /* මූලික සැකසුම් */
     * {
       margin: 0;
       padding: 0;
@@ -15,90 +15,81 @@
     body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start; /* ඉහළ සිට ආරම්භ කිරීමට */
       align-items: center;
       min-height: 100vh;
       background: #000;
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
-      perspective: 1000px; /* Essential for 3D effects */
+      perspective: 1000px;
+      padding-top: 5vh; /* ඉහළින් කුඩා ඉඩක් */
     }
 
-    /* Text Content */
-    .wish-container {
-      position: relative;
-      z-index: 100;
-      text-align: center;
-      margin-bottom: 20px;
-      pointer-events: none;
+    /* රූපය සඳහා සැකසුම් */
+    .banner-img {
+      width: 85%;
+      max-width: 450px; 
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255, 190, 41, 0.4);
+      z-index: 10;
+      animation: fadeInDown 1.5s ease-out;
+      border: 1px solid rgba(255, 190, 41, 0.3);
     }
 
-    h1 {
-      font-size: clamp(1.5rem, 8vw, 3.5rem);
-      background: linear-gradient(to right, #FFBE29, #fbff00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-      text-transform: uppercase;
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    p {
-      color: #fff;
-      font-size: clamp(1rem, 4vw, 1.5rem);
-      opacity: 0.9;
-    }
-
-    /* Fixed Animation Container */
+    /* Animation එක තබන ස්ථානය */
     .container {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 40vh; /* Controlled height to prevent overflow */
+      height: 40vh; /* රූපයට යටින් ප්‍රමාණවත් ඉඩක් */
       width: 100%;
       transform-style: preserve-3d;
+      margin-top: 50px; /* රූපය සහ රවුම් අතර පරතරය */
     }
 
     .circle {
       position: absolute;
       background: transparent;
-      /* Using a more stable sizing logic */
-      width: calc(10vmin + (var(--i) * 2.5vmin));
+      width: calc(15vmin + (var(--i) * 2vmin)); /* ප්‍රමාණය තරමක් වෙනස් කළා */
       aspect-ratio: 1;
       border-radius: 50%;
       border: 2px solid #FFBE29;
       transform-style: preserve-3d;
-      /* Combined transform into the animation for better stability */
+      /* 3D භ්‍රමණය සහ චලනය */
       animation: animate 4s ease-in-out calc(var(--i) * 0.1s) infinite;
-      box-shadow: 0 0 15px rgba(255, 190, 41, 0.4);
+      box-shadow: 0 0 10px rgba(255, 190, 41, 0.2);
     }
 
     @keyframes animate {
       0%, 100% {
         transform: rotateX(75deg) translateZ(0) translateY(0);
         border-color: #FFBE29;
-        filter: hue-rotate(0deg);
+        opacity: 0.5;
       }
       50% {
-        /* Adjusted translateY to keep it within the viewport */
-        transform: rotateX(75deg) translateZ(0) translateY(-30vh);
+        /* ඉහළට යන ප්‍රමාණය පාලනය කළා */
+        transform: rotateX(75deg) translateZ(0) translateY(-20vh);
         border-color: #00534E;
-        filter: hue-rotate(90deg);
+        opacity: 1;
       }
     }
 
-    .lion-flag-colors {
-      color: #8D153A; /* Maroon from flag */
-      font-weight: bold;
+    /* ජංගම දුරකථන සඳහා කුඩා වෙනස්කම් */
+    @media (max-height: 700px) {
+      .banner-img { max-width: 320px; }
+      .container { margin-top: 20px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="wish-container">
-    <h1>78 වන ජාතික නිදහස් දිනය</h1>
-    <p>නිදහස් ස්වෛරී දේශයක් වෙනුවෙන් <br> <b>සුභ නිදහස් දිනයක් වේවා!</b></p>
-  </div>
+  <img src="78new.jpg" alt="78th Independence Day" class="banner-img">
 
   <div class="container">
     <div class="circle" style="--i:1;"></div>
